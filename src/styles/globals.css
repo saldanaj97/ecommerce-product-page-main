@@ -20,13 +20,13 @@ hr {
   border: 0;
   height: 1px;
   background-color: hsl(220, 14%, 75%);
-  margin-top: 40px;
+  margin-top: 2px;
 }
 
 /* Navbar */
 .navbar {
   width: 75%;
-  margin: 20px 0px 0px 0px;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,8 +44,20 @@ hr {
 }
 
 .tab {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 3px solid transparent;
+  height: 100px;
   font-size: 16px;
   margin: 0px 20px;
+}
+
+.tab:hover {
+  border-bottom: 3px solid hsl(26, 100%, 55%);
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.2s;
 }
 
 .user-section {
@@ -66,6 +78,15 @@ hr {
   height: 40px;
   width: 40px;
   margin: 0px 20px;
+  border: 2px solid transparent;
+  border-radius: 50px;
+}
+
+.user-avatar:hover {
+  cursor: pointer;
+  border: 2px solid hsl(26, 100%, 55%);
+  border-radius: 50px;
+  transition: 0.2s;
 }
 
 /* Product Images */
@@ -87,8 +108,8 @@ hr {
 
 .current-preview img {
   border-radius: 10px;
-  width: 105%;
-  height: 105%;
+  width: 400px;
+  height: 400px;
 }
 
 .product-preview-row {
@@ -103,6 +124,13 @@ hr {
   height: 20%;
   margin: 15px 10px;
   border-radius: 10px;
+}
+
+.product-preview-row img:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  border-radius: 10px;
+  transition: 0.2s;
 }
 
 /* Product Details */
@@ -200,8 +228,14 @@ hr {
 
 .quantity-update p {
   color: hsl(26, 100%, 55%);
+  font-size: 25px;
   font-weight: 700;
   cursor: pointer;
+}
+
+.quantity-update:hover p {
+  color: hsl(26, 100%, 55%, 0.5);
+  transition: 0.2s;
 }
 
 .add-to-cart {
@@ -210,10 +244,16 @@ hr {
   justify-content: center;
   align-items: center;
   background-color: hsl(26, 100%, 55%);
-  width: 100%;
+  width: 200px;
   height: 50px;
   border-radius: 5px;
   margin: 0px 20px 0px 20px;
+}
+
+.add-to-cart:hover {
+  background-color: hsl(26, 100%, 45%, 0.6);
+  transition: 0.2s;
+  box-shadow: 0px 5px 15px hsla(26, 100%, 45%, 0.4);
 }
 
 .add-to-cart p {

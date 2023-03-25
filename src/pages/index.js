@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Head from "next/head";
 
 export default function Home() {
@@ -62,11 +63,11 @@ export default function Home() {
             <div className='purchasing-options'>
               <div className='quantity-selector'>
                 <button className='quantity-update'>
-                  <p className='increment'>-</p>
+                  <p className='decrement'>-</p>
                 </button>
                 <button className='quantity'>0</button>
                 <button className='quantity-update'>
-                  <p className='decrement'>+</p>
+                  <p className='increment'>+</p>
                 </button>
               </div>
               <div className='add-to-cart'>
