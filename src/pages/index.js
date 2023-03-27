@@ -6,6 +6,8 @@ export default function Home() {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [quantity, setQuantity] = useState(0);
+  const [previewSelected, setPreviewSelected] = useState(1);
+  const [currentPreview, setCurrentPreview] = useState("../images/image-product-1.jpg");
 
   const [item1, setItem1] = useState({
     id: 1,
@@ -36,6 +38,34 @@ export default function Home() {
     setItem1({ ...item1, quantity: item1.quantity + count });
     setQuantity(0);
     setCartCount(cartCount + count);
+  };
+
+  // Handle preview image selection
+  const handlePreviewSelect = (value) => {
+    setPreviewSelected(value);
+
+    switch (value) {
+      case 1: {
+        setCurrentPreview("../images/image-product-1.jpg");
+        break;
+      }
+      case 2: {
+        setCurrentPreview("../images/image-product-2.jpg");
+        break;
+      }
+      case 3: {
+        setCurrentPreview("../images/image-product-3.jpg");
+        break;
+      }
+      case 4: {
+        setCurrentPreview("../images/image-product-4.jpg");
+        break;
+      }
+      default: {
+        setCurrentPreview("../images/image-product-1.jpg");
+        break;
+      }
+    }
   };
 
   // Render the cart contents if there are any, otherwise render the empty cart message
@@ -133,13 +163,41 @@ export default function Home() {
         <div className='product-preview'>
           <div className='product-images'>
             <div className='current-preview'>
-              <img src='../images/image-product-1.jpg' alt='product' />
+              <img src={currentPreview} alt='product' />
             </div>
             <div className='product-preview-row'>
-              <img src='../images/image-product-1-thumbnail.jpg' alt='product' />
-              <img src='../images/image-product-2-thumbnail.jpg' alt='product' />
-              <img src='../images/image-product-3-thumbnail.jpg' alt='product' />
-              <img src='../images/image-product-4-thumbnail.jpg' alt='product' />
+              <button
+                className={previewSelected == 1 ? "selected-preview" : ""}
+                onClick={() => {
+                  handlePreviewSelect(1);
+                }}
+              >
+                <img src='../images/image-product-1-thumbnail.jpg' alt='product' />{" "}
+              </button>
+              <button
+                className={previewSelected == 2 ? "selected-preview" : ""}
+                onClick={() => {
+                  handlePreviewSelect(2);
+                }}
+              >
+                <img src='../images/image-product-2-thumbnail.jpg' alt='product' />{" "}
+              </button>
+              <button
+                className={previewSelected == 3 ? "selected-preview" : ""}
+                onClick={() => {
+                  handlePreviewSelect(3);
+                }}
+              >
+                <img src='../images/image-product-3-thumbnail.jpg' alt='product' />{" "}
+              </button>
+              <button
+                className={previewSelected == 4 ? "selected-preview" : ""}
+                onClick={() => {
+                  handlePreviewSelect(4);
+                }}
+              >
+                <img src='../images/image-product-4-thumbnail.jpg' alt='product' />{" "}
+              </button>
             </div>
           </div>
           <div className='product-information'>
