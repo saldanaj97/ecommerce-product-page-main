@@ -131,16 +131,30 @@ export default function Home() {
       </Head>
       <main className='page-container'>
         <div className='navbar'>
-          <div className='store-logo'>
-            <img src='../images/logo.svg' alt='logo' />
-          </div>
-          <div className='tabs'>
-            <a className='tab'>Collections</a>
-            <a className='tab'>Men</a>
-            <a className='tab'>Women</a>
-            <a className='tab'>About</a>
-            <a className='tab'>Contact</a>
-          </div>
+          {window.innerWidth > 375 ? (
+            <div className='desktop-navbar'>
+              <div className='store-logo'>
+                <img src='../images/logo.svg' alt='logo' />
+              </div>
+              <div className='tabs'>
+                <a className='tab'>Collections</a>
+                <a className='tab'>Men</a>
+                <a className='tab'>Women</a>
+                <a className='tab'>About</a>
+                <a className='tab'>Contact</a>
+              </div>
+            </div>
+          ) : (
+            <div className='mobile-navbar'>
+              <div className='menu-icon'>
+                <img src='../images/icon-menu.svg' alt='menu' />
+              </div>
+              <div className='store-logo'>
+                <img src='../images/logo.svg' alt='logo' />
+              </div>
+            </div>
+          )}
+
           <div className='user-section'>
             <div className='cart-icon'>
               <button
