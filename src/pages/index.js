@@ -1,5 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
+
+export function MobileNavbar() {
+  return (
+    <div className='mobile-navbar'>
+      <div className='menu-icon'>
+        <img src='../images/icon-menu.svg' alt='menu' />
+      </div>
+      <div className='store-logo'>
+        <img src='../images/logo.svg' alt='logo' />
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const [cartCount, setCartCount] = useState(0);
@@ -8,7 +21,6 @@ export default function Home() {
   const [quantity, setQuantity] = useState(0);
   const [previewSelected, setPreviewSelected] = useState(1);
   const [currentPreview, setCurrentPreview] = useState("../images/image-product-1.jpg");
-
   const [item1, setItem1] = useState({
     id: 1,
     name: "Fall Limited Edition Sneakers",
@@ -16,6 +28,19 @@ export default function Home() {
     preview: "../images/image-product-1.jpg",
     quantity: 0,
   });
+
+  // Needed for next js to use window.innerWidth correctly
+  const useWidth = () => {
+    const [width, setWidth] = useState(0);
+    const handleResize = () => setWidth(window.innerWidth);
+    useEffect(() => {
+      handleResize();
+      //stackoverflow.com/questions/63406435/how-to-detect-window-size-in-next-js-ssr-using-react-hook
+      https: window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+    return width / 2;
+  };
 
   // Handle cart open/close
   const handleCartOpen = () => {
@@ -116,7 +141,9 @@ export default function Home() {
         <div className='user-cart-contents'>
           <p className='cart-title'>Cart</p>
           <hr className='cart-title-break' />
-          <div className='empty-cart'>Your cart is empty. </div>
+          <div className='empty-cart'>
+            <p>Your cart is empty. </p>
+          </div>
         </div>
       </div>
     );
@@ -131,7 +158,7 @@ export default function Home() {
       </Head>
       <main className='page-container'>
         <div className='navbar'>
-          {window.innerWidth > 375 ? (
+          {useWidth() > 375 ? (
             <div className='desktop-navbar'>
               <div className='store-logo'>
                 <img src='../images/logo.svg' alt='logo' />
@@ -145,14 +172,7 @@ export default function Home() {
               </div>
             </div>
           ) : (
-            <div className='mobile-navbar'>
-              <div className='menu-icon'>
-                <img src='../images/icon-menu.svg' alt='menu' />
-              </div>
-              <div className='store-logo'>
-                <img src='../images/logo.svg' alt='logo' />
-              </div>
-            </div>
+            <MobileNavbar />
           )}
 
           <div className='user-section'>
@@ -175,6 +195,16 @@ export default function Home() {
         <hr />
         {cartOpen && <div className='render-cart'>{renderCart()}</div>}
         <div className='product-preview'>
+          <div className='button-overlay'>
+            <div className='next-back-buttons'>
+              <button className='back-button' onClick={() => handlePreviewSelect(previewSelected - 1)}>
+                <img alt='back' src='../images/icon-previous.svg' />
+              </button>
+              <button className='next-button' onClick={() => handlePreviewSelect(previewSelected + 1)}>
+                <img alt='next' src='../images/icon-next.svg' />
+              </button>
+            </div>
+          </div>
           <div className='product-images'>
             <div className='current-preview'>
               <img src={currentPreview} alt='product' />
@@ -226,8 +256,8 @@ export default function Home() {
               <div className='discount-box'>
                 <p className='discount-amount'>50%</p>
               </div>
+              <p className='product-original-price'>$250.00</p>
             </div>
-            <p className='product-original-price'>$250.00</p>
             <div className='purchasing-options'>
               <div className='quantity-selector'>
                 <button
@@ -236,7 +266,7 @@ export default function Home() {
                     handleQuantityUpdate(-1);
                   }}
                 >
-                  <p className='decrement'>-</p>
+                  <img className='decrement' src='../images/icon-minus.svg' />
                 </button>
                 <button className='quantity'>{quantity}</button>
                 <button
@@ -245,7 +275,7 @@ export default function Home() {
                     handleQuantityUpdate(1);
                   }}
                 >
-                  <p className='increment'>+</p>
+                  <img className='increment' src='../images/icon-plus.svg' />
                 </button>
               </div>
               <div className='add-to-cart'>
