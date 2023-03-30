@@ -40,8 +40,8 @@ export function MobileNavbar({ setMenuOpen }) {
   );
 }
 
+// Component responsible for rendering the menu when open
 export function MobileMenu({ menuOpen, setMenuOpen }) {
-  // Handle rendering the menu when open
   const renderMenu = () => {
     return (
       <div className='menu-open'>
@@ -158,6 +158,28 @@ export default function Home() {
     }
   };
 
+  // Render the user profile and cart section
+  const renderUserSection = () => {
+    return (
+      <div id='user-section' className='user-section'>
+        <div className='cart-icon'>
+          <button
+            className='cart-button'
+            onClick={() => {
+              handleCartOpen();
+            }}
+          >
+            <img src='../images/icon-cart.svg' alt='cart' />
+            {cartCount > 0 && <div className='cart-count'>{cartCount}</div>}
+          </button>
+        </div>
+        <a className='user-avatar'>
+          <img src='../images/image-avatar.png' alt='avatar' />
+        </a>
+      </div>
+    );
+  };
+
   // Render the cart contents if there are any, otherwise render the empty cart message
   const renderCart = () => {
     if (cartCount > 0) {
@@ -214,6 +236,121 @@ export default function Home() {
     );
   };
 
+  // Render product previews
+  const renderProductPreviews = () => {
+    return (
+      <div className='product-images'>
+        <div className='current-preview'>
+          {useWidth() < 375 && renderButtonOverlay()}
+          <img src={currentPreview} alt='product' />
+        </div>
+        <div className='product-preview-row'>
+          <button
+            className={previewSelected == 1 ? "selected-preview" : ""}
+            onClick={() => {
+              handlePreviewSelect(1);
+            }}
+          >
+            <img src='../images/image-product-1-thumbnail.jpg' alt='product' />{" "}
+          </button>
+          <button
+            className={previewSelected == 2 ? "selected-preview" : ""}
+            onClick={() => {
+              handlePreviewSelect(2);
+            }}
+          >
+            <img src='../images/image-product-2-thumbnail.jpg' alt='product' />{" "}
+          </button>
+          <button
+            className={previewSelected == 3 ? "selected-preview" : ""}
+            onClick={() => {
+              handlePreviewSelect(3);
+            }}
+          >
+            <img src='../images/image-product-3-thumbnail.jpg' alt='product' />{" "}
+          </button>
+          <button
+            className={previewSelected == 4 ? "selected-preview" : ""}
+            onClick={() => {
+              handlePreviewSelect(4);
+            }}
+          >
+            <img src='../images/image-product-4-thumbnail.jpg' alt='product' />{" "}
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  // Render the button overlay if the screen width is less than 375px
+  const renderButtonOverlay = () => {
+    return (
+      <div className='button-overlay'>
+        <div className='next-back-buttons'>
+          <button className='back-button' onClick={() => handlePreviewSelect(previewSelected - 1)}>
+            <img alt='back' src='../images/icon-previous.svg' />
+          </button>
+          <button className='next-button' onClick={() => handlePreviewSelect(previewSelected + 1)}>
+            <img alt='next' src='../images/icon-next.svg' />
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  // Render product details
+  const renderProductDetails = () => {
+    return (
+      <div className='product-information'>
+        <p className='product-company'>Sneaker Company</p>
+        <p className='product-title'>Fall Limited Edition Sneakers</p>
+        <p className='product-description'>
+          These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they'll withstand everything the
+          weather can offer.
+        </p>
+        <div className='product-pricing'>
+          <p className='current-price'>$125.00</p>
+          <div className='discount-box'>
+            <p className='discount-amount'>50%</p>
+          </div>
+          <p className='product-original-price'>$250.00</p>
+        </div>
+        <div className='purchasing-options'>
+          <div className='quantity-selector'>
+            <button
+              className='quantity-update'
+              onClick={() => {
+                handleQuantityUpdate(-1);
+              }}
+            >
+              <img className='decrement' src='../images/icon-minus.svg' />
+            </button>
+            <button className='quantity'>{quantity}</button>
+            <button
+              className='quantity-update'
+              onClick={() => {
+                handleQuantityUpdate(1);
+              }}
+            >
+              <img className='increment' src='../images/icon-plus.svg' />
+            </button>
+          </div>
+          <div className='add-to-cart'>
+            <button
+              className='add-to-cart-button'
+              onClick={() => {
+                handleCartItems(item1, quantity);
+              }}
+            >
+              <img className='add-to-cart-icon' src='../images/icon-cart.svg' alt='cart icon' />
+              <p>Add to Cart</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <Head>
@@ -226,124 +363,13 @@ export default function Home() {
         <div id='content-wrap' className='content-wrap'>
           <div id='navbar' className='navbar'>
             {useWidth() > 375 ? <DesktopNavbar /> : <MobileNavbar setMenuOpen={setMenuOpen} />}
-            <div id='user-section' className='user-section'>
-              <div className='cart-icon'>
-                <button
-                  className='cart-button'
-                  onClick={() => {
-                    handleCartOpen();
-                  }}
-                >
-                  <img src='../images/icon-cart.svg' alt='cart' />
-                  {cartCount > 0 && <div className='cart-count'>{cartCount}</div>}
-                </button>
-              </div>
-              <a className='user-avatar'>
-                <img src='../images/image-avatar.png' alt='avatar' />
-              </a>
-            </div>
+            {renderUserSection()}
           </div>
           <hr />
           {cartOpen && <div className='render-cart'>{renderCart()}</div>}
           <div className='product-preview'>
-            <div className='product-images'>
-              <div className='current-preview'>
-                {useWidth() < 375 && (
-                  <div className='button-overlay'>
-                    <div className='next-back-buttons'>
-                      <button className='back-button' onClick={() => handlePreviewSelect(previewSelected - 1)}>
-                        <img alt='back' src='../images/icon-previous.svg' />
-                      </button>
-                      <button className='next-button' onClick={() => handlePreviewSelect(previewSelected + 1)}>
-                        <img alt='next' src='../images/icon-next.svg' />
-                      </button>
-                    </div>
-                  </div>
-                )}
-                <img src={currentPreview} alt='product' />
-              </div>
-              <div className='product-preview-row'>
-                <button
-                  className={previewSelected == 1 ? "selected-preview" : ""}
-                  onClick={() => {
-                    handlePreviewSelect(1);
-                  }}
-                >
-                  <img src='../images/image-product-1-thumbnail.jpg' alt='product' />{" "}
-                </button>
-                <button
-                  className={previewSelected == 2 ? "selected-preview" : ""}
-                  onClick={() => {
-                    handlePreviewSelect(2);
-                  }}
-                >
-                  <img src='../images/image-product-2-thumbnail.jpg' alt='product' />{" "}
-                </button>
-                <button
-                  className={previewSelected == 3 ? "selected-preview" : ""}
-                  onClick={() => {
-                    handlePreviewSelect(3);
-                  }}
-                >
-                  <img src='../images/image-product-3-thumbnail.jpg' alt='product' />{" "}
-                </button>
-                <button
-                  className={previewSelected == 4 ? "selected-preview" : ""}
-                  onClick={() => {
-                    handlePreviewSelect(4);
-                  }}
-                >
-                  <img src='../images/image-product-4-thumbnail.jpg' alt='product' />{" "}
-                </button>
-              </div>
-            </div>
-            <div className='product-information'>
-              <p className='product-company'>Sneaker Company</p>
-              <p className='product-title'>Fall Limited Edition Sneakers</p>
-              <p className='product-description'>
-                These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they'll withstand everything
-                the weather can offer.
-              </p>
-              <div className='product-pricing'>
-                <p className='current-price'>$125.00</p>
-                <div className='discount-box'>
-                  <p className='discount-amount'>50%</p>
-                </div>
-                <p className='product-original-price'>$250.00</p>
-              </div>
-              <div className='purchasing-options'>
-                <div className='quantity-selector'>
-                  <button
-                    className='quantity-update'
-                    onClick={() => {
-                      handleQuantityUpdate(-1);
-                    }}
-                  >
-                    <img className='decrement' src='../images/icon-minus.svg' />
-                  </button>
-                  <button className='quantity'>{quantity}</button>
-                  <button
-                    className='quantity-update'
-                    onClick={() => {
-                      handleQuantityUpdate(1);
-                    }}
-                  >
-                    <img className='increment' src='../images/icon-plus.svg' />
-                  </button>
-                </div>
-                <div className='add-to-cart'>
-                  <button
-                    className='add-to-cart-button'
-                    onClick={() => {
-                      handleCartItems(item1, quantity);
-                    }}
-                  >
-                    <img className='add-to-cart-icon' src='../images/icon-cart.svg' alt='cart icon' />
-                    <p>Add to Cart</p>
-                  </button>
-                </div>
-              </div>
-            </div>
+            {renderProductPreviews()}
+            {renderProductDetails()}
           </div>
         </div>
       </main>
