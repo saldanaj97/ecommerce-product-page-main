@@ -84,6 +84,7 @@ export default function Home() {
   const [previewSelected, setPreviewSelected] = useState(1);
   const [currentPreview, setCurrentPreview] = useState("../images/image-product-1.jpg");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   // Test item
   const [item1, setItem1] = useState({
@@ -156,6 +157,11 @@ export default function Home() {
         break;
       }
     }
+  };
+
+  // Handle lightbox open/close
+  const handleLightboxOpen = () => {
+    setLightboxOpen(!lightboxOpen);
   };
 
   // Render the user profile and cart section
@@ -236,48 +242,57 @@ export default function Home() {
     );
   };
 
+  // Render product preview row
+  const renderProductPreviewRow = (rowClassName) => {
+    return (
+      <div className={rowClassName}>
+        <button
+          className={previewSelected == 1 ? "selected-preview" : ""}
+          onClick={() => {
+            handlePreviewSelect(1);
+          }}
+        >
+          <img src='../images/image-product-1-thumbnail.jpg' alt='product' />{" "}
+        </button>
+        <button
+          className={previewSelected == 2 ? "selected-preview" : ""}
+          onClick={() => {
+            handlePreviewSelect(2);
+          }}
+        >
+          <img src='../images/image-product-2-thumbnail.jpg' alt='product' />{" "}
+        </button>
+        <button
+          className={previewSelected == 3 ? "selected-preview" : ""}
+          onClick={() => {
+            handlePreviewSelect(3);
+          }}
+        >
+          <img src='../images/image-product-3-thumbnail.jpg' alt='product' />{" "}
+        </button>
+        <button
+          className={previewSelected == 4 ? "selected-preview" : ""}
+          onClick={() => {
+            handlePreviewSelect(4);
+          }}
+        >
+          <img src='../images/image-product-4-thumbnail.jpg' alt='product' />{" "}
+        </button>
+      </div>
+    );
+  };
+
   // Render product previews
   const renderProductPreviews = () => {
     return (
       <div className='product-images'>
         <div className='current-preview'>
           {useWidth() < 375 && renderButtonOverlay()}
-          <img src={currentPreview} alt='product' />
-        </div>
-        <div className='product-preview-row'>
-          <button
-            className={previewSelected == 1 ? "selected-preview" : ""}
-            onClick={() => {
-              handlePreviewSelect(1);
-            }}
-          >
-            <img src='../images/image-product-1-thumbnail.jpg' alt='product' />{" "}
-          </button>
-          <button
-            className={previewSelected == 2 ? "selected-preview" : ""}
-            onClick={() => {
-              handlePreviewSelect(2);
-            }}
-          >
-            <img src='../images/image-product-2-thumbnail.jpg' alt='product' />{" "}
-          </button>
-          <button
-            className={previewSelected == 3 ? "selected-preview" : ""}
-            onClick={() => {
-              handlePreviewSelect(3);
-            }}
-          >
-            <img src='../images/image-product-3-thumbnail.jpg' alt='product' />{" "}
-          </button>
-          <button
-            className={previewSelected == 4 ? "selected-preview" : ""}
-            onClick={() => {
-              handlePreviewSelect(4);
-            }}
-          >
-            <img src='../images/image-product-4-thumbnail.jpg' alt='product' />{" "}
+          <button className='lightbox-button' onClick={() => handleLightboxOpen()}>
+            <img src={currentPreview} alt='product' />
           </button>
         </div>
+        <div className='preview-row'>{renderProductPreviewRow("product-preview-row")}</div>
       </div>
     );
   };
@@ -351,6 +366,33 @@ export default function Home() {
     );
   };
 
+  // Make a lightbox for the product preview images
+  const renderLightbox = () => {
+    return (
+      <div className='lightbox'>
+        <div className='lightbox-content'>
+          <div className='lightbox-close-button'>
+            <button onClick={() => handleLightboxOpen()}>
+              <img src='../images/icon-close.svg' alt='close' />
+            </button>
+          </div>
+          <div className='lightbox-current-preview'>
+            <button className='lightbox-change-img-button' onClick={() => handlePreviewSelect(previewSelected - 1)}>
+              <img alt='back' src='../images/icon-previous.svg' />
+            </button>
+            <div className='lightbox-image'>
+              <img src={currentPreview} alt='product' />
+            </div>
+            <button className='lightbox-change-img-button' onClick={() => handlePreviewSelect(previewSelected + 1)}>
+              <img alt='next' src='../images/icon-next.svg' />
+            </button>
+          </div>
+          {renderProductPreviewRow("lightbox-preview-row")}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <Head>
@@ -368,6 +410,7 @@ export default function Home() {
           <hr />
           {cartOpen && <div className='render-cart'>{renderCart()}</div>}
           <div className='product-preview'>
+            {lightboxOpen && renderLightbox()}
             {renderProductPreviews()}
             {renderProductDetails()}
           </div>

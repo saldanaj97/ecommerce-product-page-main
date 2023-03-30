@@ -86,7 +86,6 @@ hr {
 }
 
 .cart-icon {
-  /*   position: relative; */
   width: 30px;
   height: 30px;
   margin-top: 15px;
@@ -137,12 +136,129 @@ hr {
   margin: 100px 0px;
 }
 
-/* .current-preview {
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox-button {
+  all: unset;
+  cursor: pointer;
+}
+
+.lightbox-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-} */
+  width: 80%;
+  height: 100%;
+}
+
+.lightbox-current-preview {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox-change-img-button {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 0px -220px;
+  background-color: white;
+  border-radius: 50px;
+  padding: 15px;
+  z-index: 1000;
+}
+
+.lightbox-close-button button {
+  all: unset;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 30px;
+  height: 30px;
+  margin: 125px 0px 20px 575px;
+  cursor: pointer;
+}
+
+.lightbox-close-button img {
+  width: 30px;
+  height: 30px;
+  filter: invert(99%) sepia(0%) saturate(2%) hue-rotate(305deg) brightness(104%) contrast(100%);
+}
+
+.lightbox-close-button img:hover {
+  filter: invert(52%) sepia(98%) saturate(1452%) hue-rotate(347deg) brightness(100%) contrast(102%);
+  transition: 0.2s;
+}
+
+.lightbox-change-img-button svg {
+  width: 30px;
+  height: 30px;
+}
+
+.lightbox-change-img-button img:hover {
+  filter: invert(52%) sepia(98%) saturate(1452%) hue-rotate(347deg) brightness(100%) contrast(102%);
+  transition: 0.2s;
+}
+
+.lightbox-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+}
+
+.lightbox-image img {
+  width: 60%;
+  height: 60%;
+}
+
+.lightbox img {
+  border-radius: 15px;
+}
+
+.lightbox-preview-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0px;
+}
+
+.lightbox-preview-row button {
+  all: unset;
+  background-color: transparent;
+}
+
+.lightbox-preview-row img {
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  border: 0px solid transparent;
+  margin: 30px;
+}
+
+.lightbox-preview-row img:hover {
+  cursor: pointer;
+  opacity: 0.6;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  transition: 0.2s;
+}
 
 .current-preview img {
   border-radius: 10px;
@@ -156,7 +272,6 @@ hr {
   justify-content: space-between;
   margin: 20px 0px;
 }
-
 .product-preview-row button {
   all: unset;
 }
@@ -244,7 +359,6 @@ hr {
 .purchasing-options {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
   margin: 20px 0px;
 }
@@ -269,13 +383,13 @@ hr {
   height: 40px;
   border-radius: 5px;
   font-weight: 700;
+  cursor: pointer;
 }
 
 .quantity-update p {
   color: hsl(26, 100%, 55%);
   font-size: 25px;
   font-weight: 700;
-  cursor: pointer;
 }
 
 .quantity-update:hover p {
@@ -526,7 +640,7 @@ hr {
   }
 
   .store-logo img {
-    margin: 0px 25px;
+    margin: 0px 0px 0px 25px;
   }
 
   .menu-open {
@@ -587,8 +701,8 @@ hr {
   .product-preview {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: space-around;
+    justify-content: center;
+    align-content: center;
     margin: 0px;
     width: 100%;
   }
@@ -599,7 +713,7 @@ hr {
   }
 
   .product-information {
-    margin: 0px 50px;
+    margin: 0px 25px 0px 40px;
   }
 
   .button-overlay {
@@ -631,6 +745,10 @@ hr {
     width: 10px;
     height: 13px;
     margin: 0px;
+  }
+
+  .lightbox {
+    display: none;
   }
 
   .product-preview-row {
