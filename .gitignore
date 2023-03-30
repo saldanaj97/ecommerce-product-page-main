@@ -35,3 +35,5 @@ yarn-error.log*
 .DS_Store
 .prettierignore
 .vscode
+# Local Netlify folder
+.netlify

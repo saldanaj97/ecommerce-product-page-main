@@ -86,6 +86,8 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
+  const width = useWidth();
+
   // Test item
   const [item1, setItem1] = useState({
     id: 1,
@@ -96,7 +98,7 @@ export default function Home() {
   });
 
   // Needed for next js to use window.innerWidth correctly
-  const useWidth = () => {
+  function useWidth() {
     const [width, setWidth] = useState(0);
     const handleResize = () => setWidth(window.innerWidth);
     useEffect(() => {
@@ -106,7 +108,7 @@ export default function Home() {
       return () => window.removeEventListener("resize", handleResize);
     }, []);
     return width / 2;
-  };
+  }
 
   // Handle cart open/close
   const handleCartOpen = () => {
@@ -287,7 +289,7 @@ export default function Home() {
     return (
       <div className='product-images'>
         <div className='current-preview'>
-          {useWidth() < 375 && renderButtonOverlay()}
+          {width < 375 && renderButtonOverlay()}
           <button className='lightbox-button' onClick={() => handleLightboxOpen()}>
             <img src={currentPreview} alt='product' />
           </button>
@@ -320,8 +322,8 @@ export default function Home() {
         <p className='product-company'>Sneaker Company</p>
         <p className='product-title'>Fall Limited Edition Sneakers</p>
         <p className='product-description'>
-          These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they'll withstand everything the
-          weather can offer.
+          These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they&quot;ll withstand everything
+          the weather can offer.
         </p>
         <div className='product-pricing'>
           <p className='current-price'>$125.00</p>
@@ -404,7 +406,7 @@ export default function Home() {
         <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <div id='content-wrap' className='content-wrap'>
           <div id='navbar' className='navbar'>
-            {useWidth() > 375 ? <DesktopNavbar /> : <MobileNavbar setMenuOpen={setMenuOpen} />}
+            {width > 375 ? <DesktopNavbar /> : <MobileNavbar setMenuOpen={setMenuOpen} />}
             {renderUserSection()}
           </div>
           <hr />
